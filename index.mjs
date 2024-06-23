@@ -1,6 +1,7 @@
 import marked from "marked"
 
 let data = ""
+let checkWords = []
 let overlayDisplay = true
 let inputDisplay = false
 
@@ -14,15 +15,19 @@ function main () {
   const output = document.body.querySelector(".output")
   output.addEventListener("mouseenter", onMouseEnterOutput, true)
   output.addEventListener("mouseleave", onMouseLeaveOutput, true)
+  output.addEventListener("click", onClickOutput, true)
   data = window.localStorage.getItem("data") ?? ""
+  checkWords.splice(0, checkWords.length, ...JSON.parse(window.localStorage.getItem("checkWords") ?? "[]"))
   input.value = data
   update()
+  updateCheckWords()
 }
 
 function onInput (event) {
   data = event.target.value
   window.localStorage.setItem("data", data)
   update()
+  updateCheckWords()
 }
 
 function toggleOverlay () {
@@ -47,9 +52,30 @@ function onMouseLeaveOutput (event) {
   }
 }
 
+function onClickOutput (event) {
+  if (event.target.tagName === "EM") {
+    const index = checkWords.indexOf(event.target.innerText)
+    if (index === - 1) {
+      checkWords.push(event.target.innerText)
+    } else {
+      checkWords.splice(index, 1)
+    }
+    window.localStorage.setItem("checkWords", JSON.stringify(checkWords))
+    updateCheckWords()
+  }
+}
+
 function update () {
   const output = document.body.querySelector(".output")
   output.innerHTML = marked.parse(data)
+}
+
+function updateCheckWords () {
+  const ems = document.querySelectorAll(".output em")
+  Array.from(ems).forEach((em) => {
+    const checked = checkWords.includes(em.innerText)
+    em.setAttribute("data-checked", checked)
+  })
 }
 
 main()

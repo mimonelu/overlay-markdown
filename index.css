@@ -97,6 +97,9 @@ button {
   color: transparent;
   padding: 0.125rem;
 }
+.output em[data-checked="true"] {
+  box-shadow: 0 0 0 1px #ffff00, 0 0 0 1px #ffff00 inset;
+}
 .output a {
   color: #909090;
 }
