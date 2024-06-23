@@ -15,7 +15,7 @@ function main () {
   const output = document.body.querySelector(".output")
   output.addEventListener("mouseenter", onMouseEnterOutput, true)
   output.addEventListener("mouseleave", onMouseLeaveOutput, true)
-  output.addEventListener("click", onClickOutput, true)
+  document.body.addEventListener("keyup", onKeyUpOutput, true)
   data = window.localStorage.getItem("data") ?? ""
   checkWords.splice(0, checkWords.length, ...JSON.parse(window.localStorage.getItem("checkWords") ?? "[]"))
   input.value = data
@@ -40,29 +40,37 @@ function toggleInput () {
   document.body.setAttribute("data-input-display", inputDisplay)
 }
 
+let currentEm = undefined
+
 function onMouseEnterOutput (event) {
   if (event.target.tagName === "EM") {
+    currentEm = event.target
     event.target.style.color = "rgb(255, 128, 128)"
   }
 }
 
 function onMouseLeaveOutput (event) {
   if (event.target.tagName === "EM") {
+    currentEm = undefined
     event.target.style.color = null
   }
 }
 
-function onClickOutput (event) {
-  if (event.target.tagName === "EM") {
-    const index = checkWords.indexOf(event.target.innerText)
-    if (index === - 1) {
-      checkWords.push(event.target.innerText)
-    } else {
-      checkWords.splice(index, 1)
-    }
-    window.localStorage.setItem("checkWords", JSON.stringify(checkWords))
-    updateCheckWords()
+function onKeyUpOutput (event) {
+  if (currentEm == null) {
+    return
   }
+  if (event.key !== "Shift") {
+    return
+  }
+  const index = checkWords.indexOf(currentEm.innerText)
+  if (index === - 1) {
+    checkWords.push(currentEm.innerText)
+  } else {
+    checkWords.splice(index, 1)
+  }
+  window.localStorage.setItem("checkWords", JSON.stringify(checkWords))
+  updateCheckWords()
 }
 
 function update () {
