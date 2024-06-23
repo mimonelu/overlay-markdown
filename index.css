@@ -9,6 +9,15 @@ body[data-input-display="false"] .main {
 body[data-input-display="false"] .input {
   display: none;
 }
+body[data-overlay-display="false"] .output em {
+  color: rgb(255, 128, 128);
+}
+body[data-overlay-display="false"] .overlay-toggle::before {
+  content: "Show overlay";
+}
+body[data-overlay-display="true"] .overlay-toggle::before {
+  content: "Hide overlay";
+}
 body[data-input-display="false"] .input-toggle::before {
   content: "Show input";
 }
@@ -29,7 +38,7 @@ body[data-input-display="true"] .input-toggle::before {
 .header {
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
 }
 
 .header > h1 {

@@ -1,11 +1,14 @@
 import marked from "marked"
 
 let data = ""
+let overlayDisplay = true
 let inputDisplay = false
 
 function main () {
   const input = document.body.querySelector(".input")
   input.addEventListener("input", onInput)
+  const overlayToggle = document.body.querySelector(".overlay-toggle")
+  overlayToggle.addEventListener("click", toggleOverlay)
   const inputToggle = document.body.querySelector(".input-toggle")
   inputToggle.addEventListener("click", toggleInput)
   const output = document.body.querySelector(".output")
@@ -20,6 +23,11 @@ function onInput (event) {
   data = event.target.value
   window.localStorage.setItem("data", data)
   update()
+}
+
+function toggleOverlay () {
+  overlayDisplay = !overlayDisplay
+  document.body.setAttribute("data-overlay-display", overlayDisplay)
 }
 
 function toggleInput () {
