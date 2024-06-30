@@ -13,11 +13,11 @@ function main () {
   const inputToggle = document.body.querySelector(".input-toggle")
   inputToggle.addEventListener("click", toggleInput)
   const output = document.body.querySelector(".output")
-  output.addEventListener("mouseenter", onMouseEnterOutput, true)
+  output.addEventListener("pointerover", onMouseEnterOutput, true)
   output.addEventListener("mouseleave", onMouseLeaveOutput, true)
   document.body.addEventListener("keyup", onKeyUpOutput, true)
-  data = window.localStorage.getItem("data") ?? ""
-  checkWords.splice(0, checkWords.length, ...JSON.parse(window.localStorage.getItem("checkWords") ?? "[]"))
+  data = window.localStorage.getItem("omData") ?? ""
+  checkWords.splice(0, checkWords.length, ...JSON.parse(window.localStorage.getItem("omCheckWords") ?? "[]"))
   input.value = data
   update()
   updateCheckWords()
@@ -25,7 +25,7 @@ function main () {
 
 function onInput (event) {
   data = event.target.value
-  window.localStorage.setItem("data", data)
+  window.localStorage.setItem("omData", data)
   update()
   updateCheckWords()
 }
@@ -43,6 +43,9 @@ function toggleInput () {
 let currentEm = undefined
 
 function onMouseEnterOutput (event) {
+  if (currentEm != null) {
+    currentEm.style.color = null
+  }
   if (event.target.tagName === "EM") {
     currentEm = event.target
     event.target.style.color = "rgb(255, 128, 128)"
@@ -69,7 +72,7 @@ function onKeyUpOutput (event) {
   } else {
     checkWords.splice(index, 1)
   }
-  window.localStorage.setItem("checkWords", JSON.stringify(checkWords))
+  window.localStorage.setItem("omCheckWords", JSON.stringify(checkWords))
   updateCheckWords()
 }
 
