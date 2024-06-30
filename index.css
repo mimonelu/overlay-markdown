@@ -1,7 +1,21 @@
 body {
   background-color: #202428;
   color: #ffffff;
+  font-family:
+    "Segoe UI",
+    Meiryo,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
   margin: 0;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 body[data-input-display="false"] .input {
   display: none;
@@ -107,7 +121,7 @@ button {
   background-color: rgb(255, 0, 0, 0.25);
   /* color: rgb(255, 128, 128); */
   color: transparent;
-  padding: 0.125rem;
+  padding: 0.0625rem 0.125rem;
 }
 .output em[data-checked="true"] {
   box-shadow: 0 0 0 1px #ffff00, 0 0 0 1px #ffff00 inset;
